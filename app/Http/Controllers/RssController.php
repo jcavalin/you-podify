@@ -2,47 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Services\EpisodeService;
+use App\Services\RssService;
 
 class RssController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct(protected EpisodeService $episodeService, protected RssService $rssService)
     {
-        //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function getRss(string $channelId)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $result = $this->episodeService->getList($channelId, 50);
+        
+        if (!$result) {
+            return response('', 404);
+        }
+        
+        return response($this->rssService->generate($result), 200)->header('Content-Type', 'application/xml');
     }
 }

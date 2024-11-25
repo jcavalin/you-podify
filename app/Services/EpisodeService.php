@@ -54,11 +54,9 @@ class EpisodeService
         try {
             $pageToken = null;
             do {
-                $response = $this->youtube->search->listSearch('snippet', [
-                    'channelId' => $channelId,
+                $response = $this->youtube->playlistItems->listPlaylistItems('snippet', [
+                    'playlistId' => $channelInfo['contentDetails']['relatedPlaylists']['uploads'],
                     'maxResults' => 50, 
-                    'order' => 'date',  
-                    'type' => 'video',
                     'pageToken' => $pageToken,
                 ]);
                 
@@ -67,11 +65,11 @@ class EpisodeService
                         'title' => $item['snippet']['title'],
                         'author' => $channelInfo['snippet']['title'],
                         'summary' => $item['snippet']['description'],
-                        'audio' => url("/episode/{$item['id']['videoId']}"),
+                        'audio' => url("/episode/{$item['snippet']['resourceId']['videoId']}"),
                         'image' => $item['snippet']['thumbnails']['high']['url'],
-                        'guid' => $item['id']['videoId'],
+                        'guid' => $item['snippet']['resourceId']['videoId'],
                         'date' => $item['snippet']['publishedAt'],
-                        'duration' => $this->getVideoDuration($item['id']['videoId'])
+                        'duration' => $this->getVideoDuration($item['snippet']['resourceId']['videoId'])
                     ];
 
                     if ($maxResults > 0 && count($channel['episodes']) >= $maxResults) {

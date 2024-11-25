@@ -1,0 +1,22 @@
+{
+  "name": "PHP Container",
+  "dockerFile": "Dockerfile",
+  "context": ".",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+      },
+      "extensions": [
+        "mutantdino.resourcemonitor",
+        "bmewburn.vscode-intelephense-client",
+        "xdebug.php-pack",
+        "ms-azuretools.vscode-docker",
+        "eamodio.gitlens",
+        "donjayamanne.githistory",
+        "mhutchie.git-graph"
+      ]
+    }
+  },
+  "postCreateCommand": ""
+}

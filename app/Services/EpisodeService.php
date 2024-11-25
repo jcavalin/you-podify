@@ -65,7 +65,7 @@ class EpisodeService
                 foreach($response->getItems() as $item) {
                     $channel['episodes'][] = [
                         'title' => $item['snippet']['title'],
-                        'author' => $item['snippet']['title'],
+                        'author' => $channelInfo['snippet']['title'],
                         'summary' => $item['snippet']['description'],
                         'audio' => url("/episode/{$item['id']['videoId']}"),
                         'image' => $item['snippet']['thumbnails']['high']['url'],
